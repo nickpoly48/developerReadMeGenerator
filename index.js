@@ -21,12 +21,13 @@ inquirer
   .prompt(questions)
   .then(function (prompt) {
     const queryUrl = `https://api.github.com/users/${prompt.username}`;
-
+    
     axios.get(queryUrl).then(function (res) {
 
       const userInfo = {
         imgUrl: res.data.avatar_url,
         name: res.data.name,
+        email: res.data.email,
         location: res.data.location,
         profile: res.data.html_url,
         blog: res.data.blog,
@@ -37,7 +38,6 @@ inquirer
         following: res.data.following,
         bkgcolor: prompt.color
       }
-
       module.export = userInfo;
 
       fs.writeFile("template.html", generateHTML(userInfo), function (err) {
